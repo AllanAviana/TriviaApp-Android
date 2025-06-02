@@ -12,18 +12,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.unit.Dp
 
 @Composable
-fun LoginButton(onClick: () -> Unit = {}, modifier: Modifier = Modifier, color: Color = Color.White, colorText: Color = Color(0xFF2CA7CE)) {
+fun LoginButton(onClick: () -> Unit = {}, modifier: Modifier = Modifier, color: Color = Color.White, colorText: Color = Color(0xFF2CA7CE), text: String = "Login", padding: Dp = 72.dp) {
     Button(
         onClick = onClick,
         modifier = modifier
-            .padding(top = 72.dp)
+            .padding(top = padding)
             .width(318.dp)
             .height(53.dp),
         colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(50),
     ) {
-        Text("Login", color = colorText)
+        Text(text, color = colorText)
     }
 }

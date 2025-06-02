@@ -29,9 +29,6 @@ fun LoginScreen(){
 
 
 @Preview(
-    name = "Tablet Large",
-    widthDp = 1024,
-    heightDp = 1366,
     showBackground = true
 )
 @Composable
