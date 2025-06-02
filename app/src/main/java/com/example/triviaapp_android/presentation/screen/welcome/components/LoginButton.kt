@@ -14,16 +14,16 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 
 @Composable
-fun LoginButton(onClick: () -> Unit = {}, modifier: Modifier = Modifier) {
+fun LoginButton(onClick: () -> Unit = {}, modifier: Modifier = Modifier, color: Color = Color.White, colorText: Color = Color(0xFF2CA7CE)) {
     Button(
         onClick = onClick,
         modifier = modifier
             .padding(top = 72.dp)
             .width(318.dp)
             .height(53.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = Color.White),
+        colors = ButtonDefaults.buttonColors(containerColor = color),
         shape = RoundedCornerShape(50),
     ) {
-        Text("Login", color = Color(0xFF2CA7CE))
+        Text("Login", color = colorText)
     }
 }
