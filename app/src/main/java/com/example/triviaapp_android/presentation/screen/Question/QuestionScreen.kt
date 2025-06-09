@@ -11,12 +11,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.screen.Question.components.QuestionForm
 import com.example.triviaapp_android.presentation.screen.Question.components.QuestionHeader
 import com.example.triviaapp_android.presentation.screen.Question.components.questionGradient
 
 @Composable
-fun QuestionScreen() {
+fun QuestionScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -36,6 +37,6 @@ fun QuestionScreen() {
 @Preview(showBackground = true)
 @Composable
 fun QuestionScreenPreview() {
-    QuestionScreen()
+    QuestionScreen(navController)
 }
 

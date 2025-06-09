@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.screen.welcome.components.LoginButton
 import com.example.triviaapp_android.presentation.screen.welcome.components.SignUpButton
 import com.example.triviaapp_android.presentation.screen.welcome.components.WelcomeHeaderImage
@@ -13,7 +14,7 @@ import com.example.triviaapp_android.presentation.screen.welcome.components.Welc
 import com.example.triviaapp_android.presentation.screen.welcome.components.welcomeGradient
 
 @Composable
-fun WelcomeScreen() {
+fun WelcomeScreen(navController: NavHostController) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -29,5 +30,5 @@ fun WelcomeScreen() {
 @Preview
 @Composable
 fun WelcomeScreenPreview() {
-    WelcomeScreen()
+    WelcomeScreen(navController)
 }

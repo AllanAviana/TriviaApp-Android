@@ -20,10 +20,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.screen.difficultyselection.components.DifficultySelectionGradient
 
 @Composable
-fun DifficultySelectionScreen(){
+fun DifficultySelectionScreen(navController: NavHostController) {
 
     Column(
         modifier = Modifier
@@ -109,5 +110,5 @@ fun DifficultySelectionScreen(){
 @Preview(showBackground = true)
 @Composable
 fun DifficultySelectionScreenPreview(){
-    DifficultySelectionScreen()
+    DifficultySelectionScreen(navController)
 }

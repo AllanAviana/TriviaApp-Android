@@ -6,12 +6,13 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import components.LoginForm
 import components.LoginHeader
 import components.loginGradient
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(navController: NavHostController) {
 
     Column(
         modifier = Modifier
@@ -33,5 +34,5 @@ fun LoginScreen(){
 )
 @Composable
 fun LoginScreenPreview() {
-    LoginScreen()
+    LoginScreen(navController)
 }

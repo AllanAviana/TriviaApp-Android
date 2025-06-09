@@ -10,9 +10,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 
 @Composable
-fun ProgressScreen(){
+fun ProgressScreen(navController: NavHostController) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -32,5 +33,5 @@ fun ProgressScreen(){
 @Preview(showBackground = true)
 @Composable
 fun ProgressScreenPreview() {
-    ProgressScreen()
+    ProgressScreen(navController)
 }
