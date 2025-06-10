@@ -1,5 +1,3 @@
-
-
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -9,23 +7,28 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-
-
+import com.example.triviaapp_android.presentation.UIStates.home.CardState
 
 @Composable
-        fun PlayCardGrid(
-            totalCards: Int = 4,
-            modifier: Modifier = Modifier
-        ) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                modifier = modifier.fillMaxWidth().heightIn(max = 600.dp),
-                contentPadding = PaddingValues(horizontal = 16.dp, vertical = 40.dp),
-                horizontalArrangement = Arrangement.spacedBy(24.dp),
-                verticalArrangement = Arrangement.spacedBy(32.dp)
-            ) {
-                items(totalCards) {
-                    PlayCard()
-                }
+fun PlayCardGrid(cardList: List<CardState>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        modifier = Modifier
+            .fillMaxWidth()
+            .heightIn(max = 600.dp),
+        contentPadding = PaddingValues(horizontal = 16.dp, vertical = 40.dp),
+        horizontalArrangement = Arrangement.spacedBy(24.dp),
+        verticalArrangement = Arrangement.spacedBy(32.dp)
+    ) {
+
+        cardList.forEach { card ->
+            item {
+                PlayCard(
+                    title = card.category,
+                    totalQuestions = 132,
+                    image = card.image
+                )
             }
         }
+    }
+}
