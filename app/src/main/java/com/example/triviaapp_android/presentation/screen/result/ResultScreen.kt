@@ -27,9 +27,3 @@ fun ResultScreen(){
         PointsSection()
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun ResultScreenPreview(){
-    ResultScreen()
-}

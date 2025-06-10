@@ -1,6 +1,7 @@
 package com.example.triviaapp_android.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,9 +14,12 @@ import com.example.triviaapp_android.presentation.screen.login.LoginScreen
 import com.example.triviaapp_android.presentation.screen.register.RegisterScreen
 import com.example.triviaapp_android.presentation.screen.result.ResultScreen
 import com.example.triviaapp_android.presentation.screen.welcome.WelcomeScreen
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
 fun AppNavGraph(navController: NavHostController = rememberNavController()) {
+    val triviaViewModel: TriviaViewModel = viewModel()
+
     NavHost(
         navController = navController,
         startDestination = "home"
@@ -32,7 +36,7 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
         }
 
         composable("home"){
-            HomeScreen(navController)
+            HomeScreen(navController, triviaViewModel)
         }
 
         composable("progress"){

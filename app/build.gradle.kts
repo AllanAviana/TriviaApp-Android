@@ -44,6 +44,9 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+
+
     implementation ("com.google.dagger:hilt-android:2.51.1")
     ksp("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")

@@ -25,14 +25,3 @@ fun LoginScreen(navController: NavHostController) {
         LoginForm()
     }
 }
-
-
-
-
-@Preview(
-    showBackground = true
-)
-@Composable
-fun LoginScreenPreview() {
-    LoginScreen(navController)
-}

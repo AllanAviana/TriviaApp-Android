@@ -30,8 +30,4 @@ fun ProgressScreen(navController: NavHostController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun ProgressScreenPreview() {
-    ProgressScreen(navController)
-}
+

@@ -27,8 +27,3 @@ fun WelcomeScreen(navController: NavHostController) {
     }
 }
 
-@Preview
-@Composable
-fun WelcomeScreenPreview() {
-    WelcomeScreen(navController)
-}

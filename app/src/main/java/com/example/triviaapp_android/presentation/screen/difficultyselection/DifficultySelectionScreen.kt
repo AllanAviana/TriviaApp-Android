@@ -106,9 +106,3 @@ fun DifficultySelectionScreen(navController: NavHostController) {
         }
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun DifficultySelectionScreenPreview(){
-    DifficultySelectionScreen(navController)
-}

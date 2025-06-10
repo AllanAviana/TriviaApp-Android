@@ -34,9 +34,3 @@ fun QuestionScreen(navController: NavHostController) {
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun QuestionScreenPreview() {
-    QuestionScreen(navController)
-}
-

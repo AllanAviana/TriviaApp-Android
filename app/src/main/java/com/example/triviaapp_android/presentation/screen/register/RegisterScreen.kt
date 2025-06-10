@@ -24,9 +24,3 @@ fun RegisterScreen(navController: NavHostController) {
         RegisterForm()
     }
 }
-
-@Preview(showBackground = true)
-@Composable
-fun RegisterScreenPreview() {
-    RegisterScreen(navController)
-}
