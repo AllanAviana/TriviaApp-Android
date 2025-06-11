@@ -48,9 +48,9 @@ fun DifficultySelectionScreen(navController: NavHostController, triviaViewModel:
 
         Button(
             onClick = {
-                navController.navigate("question")
                 triviaViewModel.updateDifficulty("easy")
                 triviaViewModel.getQuestions()
+                navController.navigate("question")
             },
             modifier = Modifier
                 .padding(top = 100.dp)
@@ -72,9 +72,9 @@ fun DifficultySelectionScreen(navController: NavHostController, triviaViewModel:
 
         Button(
             onClick = {
-                navController.navigate("question")
                 triviaViewModel.updateDifficulty("medium")
                 triviaViewModel.getQuestions()
+                navController.navigate("question")
             },
             modifier = Modifier
                 .padding(top = 72.dp)
@@ -96,9 +96,9 @@ fun DifficultySelectionScreen(navController: NavHostController, triviaViewModel:
 
         Button(
             onClick = {
-                navController.navigate("question")
                 triviaViewModel.updateDifficulty("hard")
                 triviaViewModel.getQuestions()
+                navController.navigate("question")
             },
             modifier = Modifier
                 .padding(top = 72.dp)

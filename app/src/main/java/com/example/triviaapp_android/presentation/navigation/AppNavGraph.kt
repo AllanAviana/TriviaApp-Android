@@ -48,7 +48,7 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
         }
 
         composable("question"){
-            QuestionScreen(navController)
+            QuestionScreen(navController, triviaViewModel)
         }
 
         composable("result"){

@@ -5,5 +5,6 @@ data class QuestionUIState(
     val options: List<String> = emptyList(),
     val correctAnswer: String = "",
     val selectedAnswer: String = "",
-    val isCorrect: Boolean = false
+    val isCorrect: Boolean = false,
+    val finished: Boolean = false
 )

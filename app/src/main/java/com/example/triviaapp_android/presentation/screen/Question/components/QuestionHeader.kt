@@ -16,7 +16,7 @@ import androidx.compose.ui.unit.sp
 import com.example.triviaapp_android.R
 
 @Composable
-fun QuestionHeader(){
+fun QuestionHeader(question: String) {
     Image(
         painter = painterResource(id = R.drawable.questionwavetop),
         contentDescription = null,
@@ -26,7 +26,7 @@ fun QuestionHeader(){
     )
 
     Text(
-        text = "What caused the titular mascot of Yo-Kai Watch, Jibanyan, to become a yokai?",
+        text = question,
         color = Color.White,
         fontSize = 24.sp,
         modifier = Modifier

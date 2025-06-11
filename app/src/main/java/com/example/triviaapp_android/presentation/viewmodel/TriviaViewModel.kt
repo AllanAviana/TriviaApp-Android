@@ -20,19 +20,20 @@ class TriviaViewModel @Inject constructor(
 ) : ViewModel() {
     private val _questions = MutableStateFlow<List<Question>>(emptyList())
 
-    private val _HomeUIState = MutableStateFlow<HomeUIState>(
+    private val _HomeUIState = MutableStateFlow(
         HomeUIState()
     )
     val homeUIState = _HomeUIState.asStateFlow()
 
-    private val _apiState = MutableStateFlow<ApiState>(
+    private val _apiState = MutableStateFlow(
         ApiState()
     )
 
-    private val _questionUiState = MutableStateFlow<QuestionUIState>(
+    private val _questionUiState = MutableStateFlow(
         QuestionUIState()
     )
 
+    val questionUiState = _questionUiState.asStateFlow()
 
     fun getQuestions() {
         viewModelScope.launch {
@@ -45,6 +46,7 @@ class TriviaViewModel @Inject constructor(
 
             Log.d("viewModel", questions.toString())
 
+            updateQuestionUIState()
         }
     }
 
@@ -57,5 +59,31 @@ class TriviaViewModel @Inject constructor(
         _apiState.value = _apiState.value.copy(difficulty = difficulty)
         Log.d("viewModel", _apiState.value.toString())
 
+    }
+
+    fun updateQuestionUIState() {
+        if (!_questions.value.isEmpty()) {
+            _questionUiState.value = _questionUiState.value.copy(
+                question = _questions.value[0].question,
+                options = _questions.value[0].incorrect_answers.plus(_questions.value[0].correct_answer)
+                    .shuffled(),
+                correctAnswer = _questions.value[0].correct_answer
+            )
+            _questions.value = _questions.value.drop(1)
+        }else{
+            _questionUiState.value = _questionUiState.value.copy(
+                finished = true
+            )
+        }
+    }
+
+    fun resetQuestionUIState() {
+        _questionUiState.value = _questionUiState.value.copy(
+            question = "",
+            options = emptyList(),
+            correctAnswer = "",
+            selectedAnswer = "",
+            isCorrect = false,
+        )
     }
 }

@@ -20,12 +20,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.triviaapp_android.R
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun QuestionForm(){
-    repeat(4){
+fun QuestionForm(options: List<String>, triviaViewModel: TriviaViewModel) {
+    options.forEach { option ->
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                triviaViewModel.updateQuestionUIState()
+            },
             modifier = Modifier
                 .padding(top = 32.dp)
                 .fillMaxWidth(0.9f)
@@ -34,7 +37,7 @@ fun QuestionForm(){
             colors = ButtonDefaults.buttonColors(Color(0xFF003155))
         ) {
             Text(
-                text = "Option 1",
+                text = option,
                 color = Color.White,
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Medium
