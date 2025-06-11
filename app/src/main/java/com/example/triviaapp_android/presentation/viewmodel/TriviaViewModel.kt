@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.triviaapp_android.data.remote.Question
 import com.example.triviaapp_android.data.repository.TriviaRepository
 import com.example.triviaapp_android.presentation.UIStates.QuestionUIState
+import com.example.triviaapp_android.presentation.UIStates.api.ApiState
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -24,25 +25,37 @@ class TriviaViewModel @Inject constructor(
     )
     val homeUIState = _HomeUIState.asStateFlow()
 
+    private val _apiState = MutableStateFlow<ApiState>(
+        ApiState()
+    )
+
     private val _questionUiState = MutableStateFlow<QuestionUIState>(
         QuestionUIState()
     )
 
-    init {
-        getQuestions(5, 21, "easy")
-    }
 
-    fun getQuestions(amount: Int, category: Int, difficulty: String) {
+    fun getQuestions() {
         viewModelScope.launch {
             val questions = triviaRepository.getQuestions(
-                amount = amount,
-                category = category,
-                difficulty = difficulty
+                amount = _apiState.value.amount,
+                category = _apiState.value.category,
+                difficulty = _apiState.value.difficulty
             )
             _questions.value = questions.results
 
-            Log.d("Questions", questions.toString())
+            Log.d("viewModel", questions.toString())
 
         }
+    }
+
+    fun updateCategory(category: Int) {
+        _apiState.value = _apiState.value.copy(category = category)
+        Log.d("viewModel", _apiState.value.toString())
+    }
+
+    fun updateDifficulty(difficulty: String) {
+        _apiState.value = _apiState.value.copy(difficulty = difficulty)
+        Log.d("viewModel", _apiState.value.toString())
+
     }
 }

@@ -26,7 +26,7 @@ fun HomeScreen(navController: NavHostController, triviaViewModel: TriviaViewMode
         }
 
         item {
-            HomeForm(homeUIState.value)
+            HomeForm(homeUIState.value, { navController.navigate("difficulty") }, triviaViewModel)
         }
     }
 }

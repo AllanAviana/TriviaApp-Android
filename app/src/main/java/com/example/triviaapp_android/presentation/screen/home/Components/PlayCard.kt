@@ -1,5 +1,6 @@
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.height
@@ -26,13 +27,19 @@ fun PlayCard(
     modifier: Modifier = Modifier,
     title: String = "Sports",
     totalQuestions: Int = 132,
-    image: Int
+    image: Int,
+    navigateToDifficultySelection: () -> Unit,
+    updateCategory: () -> Unit
 ) {
     Box(
         modifier = modifier
             .size(width = 140.dp, height = 220.dp)
             .clip(RoundedCornerShape(2.dp))
             .background(Color(0xFF1FA8E8))
+            .clickable {
+                navigateToDifficultySelection()
+                updateCategory()
+            }
     ) {
         if (image == R.drawable.pokebola) {
             Image(

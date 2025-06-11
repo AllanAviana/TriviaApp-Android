@@ -8,9 +8,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.triviaapp_android.presentation.UIStates.home.CardState
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun PlayCardGrid(cardList: List<CardState>) {
+fun PlayCardGrid(
+    cardList: List<CardState>,
+    navigateToDifficultySelection: () -> Unit,
+    triviaViewModel: TriviaViewModel
+) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         modifier = Modifier
@@ -26,7 +31,9 @@ fun PlayCardGrid(cardList: List<CardState>) {
                 PlayCard(
                     title = card.category,
                     totalQuestions = 132,
-                    image = card.image
+                    image = card.image,
+                    navigateToDifficultySelection = navigateToDifficultySelection,
+                    updateCategory = {triviaViewModel.updateCategory(card.categoryId)}
                 )
             }
         }

@@ -17,14 +17,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.screen.difficultyselection.components.DifficultySelectionGradient
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun DifficultySelectionScreen(navController: NavHostController) {
+fun DifficultySelectionScreen(navController: NavHostController, triviaViewModel: TriviaViewModel) {
 
     Column(
         modifier = Modifier
@@ -41,14 +41,19 @@ fun DifficultySelectionScreen(navController: NavHostController) {
                 text = "Choose the\ndifficulty level",
                 color = Color.White,
                 fontSize = 32.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold,
+                lineHeight = 40.sp
             )
         }
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate("question")
+                triviaViewModel.updateDifficulty("easy")
+                triviaViewModel.getQuestions()
+            },
             modifier = Modifier
-                .padding(top = 72.dp)
+                .padding(top = 100.dp)
                 .fillMaxWidth(0.8f)
                 .height(53.dp)
                 .shadow(
@@ -66,7 +71,11 @@ fun DifficultySelectionScreen(navController: NavHostController) {
         }
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate("question")
+                triviaViewModel.updateDifficulty("medium")
+                triviaViewModel.getQuestions()
+            },
             modifier = Modifier
                 .padding(top = 72.dp)
                 .fillMaxWidth(0.8f)
@@ -86,7 +95,11 @@ fun DifficultySelectionScreen(navController: NavHostController) {
         }
 
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {
+                navController.navigate("question")
+                triviaViewModel.updateDifficulty("hard")
+                triviaViewModel.getQuestions()
+            },
             modifier = Modifier
                 .padding(top = 72.dp)
                 .fillMaxWidth(0.8f)
