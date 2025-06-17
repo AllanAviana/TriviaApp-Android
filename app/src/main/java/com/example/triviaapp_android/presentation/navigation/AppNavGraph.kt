@@ -52,7 +52,7 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
         }
 
         composable("result"){
-            ResultScreen()
+            ResultScreen(navController,triviaViewModel)
         }
     }
 }

@@ -27,6 +27,7 @@ fun QuestionForm(options: List<String>, triviaViewModel: TriviaViewModel) {
     options.forEach { option ->
         Button(
             onClick = {
+                triviaViewModel.checkAnswer(option)
                 triviaViewModel.updateQuestionUIState()
             },
             modifier = Modifier

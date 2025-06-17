@@ -29,7 +29,8 @@ fun PlayCard(
     totalQuestions: Int = 132,
     image: Int,
     navigateToDifficultySelection: () -> Unit,
-    updateCategory: () -> Unit
+    updateCategory: () -> Unit,
+    resetUIStates: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -39,6 +40,7 @@ fun PlayCard(
             .clickable {
                 navigateToDifficultySelection()
                 updateCategory()
+                resetUIStates()
             }
     ) {
         if (image == R.drawable.pokebola) {

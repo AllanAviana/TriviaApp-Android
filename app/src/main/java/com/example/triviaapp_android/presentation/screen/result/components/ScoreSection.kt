@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ScoreSection(){
+fun ScoreSection(score: Int) {
     Text(
         text = "Your Score:",
         color = Color.White,
@@ -29,7 +29,7 @@ fun ScoreSection(){
     Text(
         text = buildAnnotatedString {
             withStyle(style = SpanStyle(color = Color.Green)) {
-                append("0")
+                append("$score")
             }
             withStyle(style = SpanStyle(color = Color.White)) {
                 append("/5")

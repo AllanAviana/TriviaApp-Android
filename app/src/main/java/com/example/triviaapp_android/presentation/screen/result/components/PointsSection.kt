@@ -15,9 +15,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.layout.ContentScale
 import com.example.triviaapp_android.R
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun PointsSection(){
+fun PointsSection(points: Int, onReturnClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -47,7 +48,7 @@ fun PointsSection(){
                 .align(Alignment.TopCenter)
         ){
             Text(
-                text = "0",
+                text = "$points",
                 color = Color.White,
                 fontSize = 48.sp,
                 fontWeight = FontWeight.Medium,
@@ -61,7 +62,7 @@ fun PointsSection(){
                 painter = painterResource(id = R.drawable.coin),
                 contentDescription = null,
                 modifier = Modifier
-                    .padding(top = 64.dp, end = 90.dp)
+                    .padding(top = 64.dp, end = 120.dp)
                     .size(40.dp)
                     .align(Alignment.Center),
                 contentScale = ContentScale.Crop
@@ -69,7 +70,9 @@ fun PointsSection(){
         }
 
         Button(
-            onClick = {  },
+            onClick = {
+                onReturnClick()
+            },
             modifier = Modifier
                 .padding(top = 64.dp)
                 .fillMaxWidth(0.5f)

@@ -25,7 +25,6 @@ fun QuestionScreen(navController: NavHostController, triviaViewModel: TriviaView
     LaunchedEffect(key1 = questionUIState.value.finished){
         if(questionUIState.value.finished){
             navController.navigate("result")
-            triviaViewModel.resetQuestionUIState()
         }
     }
 

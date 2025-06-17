@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.sp
 import com.example.triviaapp_android.R
 
 @Composable
-fun HeaderSection(){
+fun HeaderSection(image: Int, text: String, word: String) {
     Text(
         text = "Quiz Result",
         color = Color.White,
@@ -25,7 +25,7 @@ fun HeaderSection(){
     )
 
     Image(
-        painter = painterResource(id = R.drawable.trophy),
+        painter = painterResource(id = image),
         contentDescription = null,
         modifier = Modifier
             .padding(top = 32.dp)
@@ -33,7 +33,7 @@ fun HeaderSection(){
     )
 
     Text(
-        text = "Disastrous",
+        text = word,
         color = Color.White,
         fontSize = 48.sp,
         fontWeight = FontWeight.Medium,
@@ -42,7 +42,7 @@ fun HeaderSection(){
     )
 
     Text(
-        text = "The outcome was disastrous. Better luck next time!",
+        text = text,
         color = Color.White,
         fontSize = 16.sp,
         fontWeight = FontWeight.Medium,
