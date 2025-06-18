@@ -30,7 +30,8 @@ fun PlayCard(
     image: Int,
     navigateToDifficultySelection: () -> Unit,
     updateCategory: () -> Unit,
-    resetUIStates: () -> Unit
+    resetUIStates: () -> Unit,
+    updateLastPlayed: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -41,6 +42,7 @@ fun PlayCard(
                 navigateToDifficultySelection()
                 updateCategory()
                 resetUIStates()
+                updateLastPlayed()
             }
     ) {
         if (image == R.drawable.pokebola) {

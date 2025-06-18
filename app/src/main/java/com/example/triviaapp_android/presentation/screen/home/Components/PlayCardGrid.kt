@@ -34,7 +34,8 @@ fun PlayCardGrid(
                     image = card.image,
                     navigateToDifficultySelection = navigateToDifficultySelection,
                     updateCategory = {triviaViewModel.updateCategory(card.categoryId)},
-                    resetUIStates = {triviaViewModel.resetUIStates()}
+                    resetUIStates = {triviaViewModel.resetUIStates()},
+                    updateLastPlayed = {triviaViewModel.updateLastPlayed(card.category)}
                 )
             }
         }

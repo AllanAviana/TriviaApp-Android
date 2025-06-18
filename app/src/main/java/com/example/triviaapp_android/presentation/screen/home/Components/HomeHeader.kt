@@ -20,10 +20,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.navigation.NavHostController
 import com.example.triviaapp_android.R
+import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 
 @Composable
-        fun HomeHeader(){
+        fun HomeHeader(homeUIState: HomeUIState, navController: NavHostController) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -73,15 +75,19 @@ import com.example.triviaapp_android.R
                 )
 
                 LastPlayedCard(
-                    modifier = Modifier.align(Alignment.Center)
+                    modifier = Modifier.align(Alignment.Center),
+                    homeUIState.lastPlayed,
+                    homeUIState.isPlayed
                 )
 
-                Image(
-                    painter = painterResource(id = R.drawable.ball),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .size(100.dp)
-                        .offset(x = 16.dp)
-                )
+                if(homeUIState.isPlayed){
+                    Image(
+                        painter = painterResource(id = homeUIState.lastPlayed.mainImage),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .size(100.dp)
+                            .offset(x = 16.dp)
+                    )
+                }
             }
         }

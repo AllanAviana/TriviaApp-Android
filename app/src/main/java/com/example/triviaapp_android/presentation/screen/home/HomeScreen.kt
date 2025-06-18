@@ -22,7 +22,7 @@ fun HomeScreen(navController: NavHostController, triviaViewModel: TriviaViewMode
     ) {
 
         item {
-            HomeHeader()
+            HomeHeader(homeUIState.value, navController)
         }
 
         item {

@@ -3,6 +3,12 @@ package com.example.triviaapp_android.presentation.UIStates.home
 import com.example.triviaapp_android.R
 
 data class HomeUIState(
+    val lastPlayed: LastPlayedState = LastPlayedState(
+        category = "Sports",
+        categoryId = 21,
+        image = R.drawable.field,
+        mainImage =  R.drawable.ball
+    ),
     val cardList: List<CardState> = listOf(
         CardState(
             category = "Sports",
@@ -24,6 +30,7 @@ data class HomeUIState(
             categoryId = 31,
             image = R.drawable.pokebola
         )
-    )
+    ),
+    val isPlayed: Boolean = false
 )
 

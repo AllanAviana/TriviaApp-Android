@@ -9,6 +9,7 @@ import com.example.triviaapp_android.data.repository.TriviaRepository
 import com.example.triviaapp_android.presentation.UIStates.QuestionUIState
 import com.example.triviaapp_android.presentation.UIStates.api.ApiState
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
+import com.example.triviaapp_android.presentation.UIStates.home.LastPlayedState
 import com.example.triviaapp_android.presentation.UIStates.result.ResultUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -149,4 +150,64 @@ class TriviaViewModel @Inject constructor(
         }
     }
 
+    fun updateLastPlayed(category: String) {
+        when (category) {
+            "Sports" -> {
+                _HomeUIState.update {
+                    it.copy(
+                        lastPlayed = LastPlayedState(
+                            category = "Sports",
+                            categoryId = 21,
+                            image = R.drawable.field,
+                            mainImage = R.drawable.ball
+                        ),
+                        isPlayed = true
+                    )
+                }
+            }
+
+            "Geography" -> {
+                _HomeUIState.update {
+                    it.copy(
+                        lastPlayed = LastPlayedState(
+                            category = "Geography",
+                            categoryId = 22,
+                            image = R.drawable.earth,
+                            mainImage = R.drawable.globe
+                        ),
+                        isPlayed = true
+                    )
+                }
+            }
+
+            "History" -> {
+                _HomeUIState.update {
+                    it.copy(
+                        lastPlayed = LastPlayedState(
+                            category = "History",
+                            categoryId = 23,
+                            image = R.drawable.history,
+                            mainImage = R.drawable.historyicon
+                        ),
+                        isPlayed = true
+                    )
+                }
+            }
+
+            "Anime" -> {
+                _HomeUIState.update {
+                    it.copy(
+                        lastPlayed = LastPlayedState(
+                            category = "Anime",
+                            categoryId = 31,
+                            image = R.drawable.dragon,
+                            mainImage = R.drawable.animeicon
+                        ),
+                        isPlayed = true
+                    )
+                }
+            }
+        }
+        Log.d("viewModel2", _HomeUIState.value.toString())
+    }
 }
