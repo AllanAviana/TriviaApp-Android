@@ -1,10 +1,17 @@
 package com.example.triviaapp_android.presentation.navigation
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.example.triviaapp_android.presentation.screen.Progress.ProgressScreen
 import com.example.triviaapp_android.presentation.screen.Question.QuestionScreen
@@ -16,43 +23,35 @@ import com.example.triviaapp_android.presentation.screen.result.ResultScreen
 import com.example.triviaapp_android.presentation.screen.welcome.WelcomeScreen
 import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun AppNavGraph(navController: NavHostController = rememberNavController()) {
     val triviaViewModel: TriviaViewModel = viewModel()
 
-    NavHost(
-        navController = navController,
-        startDestination = "home"
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
+
+    Scaffold(
+        bottomBar = {
+            if (currentRoute == "home" || currentRoute == "progress") {
+                BottomBar(navController)
+            }
+        }
     ) {
-        composable("welcome"){
-            WelcomeScreen(navController)
-        }
-        composable("login"){
-            LoginScreen(navController)
-        }
-
-        composable("register"){
-            RegisterScreen(navController)
-        }
-
-        composable("home"){
-            HomeScreen(navController, triviaViewModel)
-        }
-
-        composable("progress"){
-            ProgressScreen(navController)
-        }
-
-        composable("difficulty"){
-            DifficultySelectionScreen(navController, triviaViewModel)
-        }
-
-        composable("question"){
-            QuestionScreen(navController, triviaViewModel)
-        }
-
-        composable("result"){
-            ResultScreen(navController,triviaViewModel)
+        NavHost(
+            navController = navController,
+            startDestination = "home",
+            modifier = Modifier
+        ) {
+            composable("welcome")  { WelcomeScreen(navController) }
+            composable("login")    { LoginScreen(navController) }
+            composable("register") { RegisterScreen(navController) }
+            composable("home")     { HomeScreen(navController, triviaViewModel) }
+            composable("progress") { ProgressScreen(navController) }
+            composable("difficulty"){ DifficultySelectionScreen(navController, triviaViewModel) }
+            composable("question") { QuestionScreen(navController, triviaViewModel) }
+            composable("result")   { ResultScreen(navController, triviaViewModel) }
         }
     }
 }
+
