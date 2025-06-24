@@ -18,7 +18,12 @@ import com.example.triviaapp_android.R
 import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun PointsSection(points: Int, onReturnClick: () -> Unit) {
+fun PointsSection(
+    points: Int,
+    category: String,
+    triviaViewModel: TriviaViewModel,
+    onReturnClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize(),
@@ -72,6 +77,7 @@ fun PointsSection(points: Int, onReturnClick: () -> Unit) {
         Button(
             onClick = {
                 onReturnClick()
+                triviaViewModel.updateStatistics(points, category)
             },
             modifier = Modifier
                 .padding(top = 64.dp)

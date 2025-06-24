@@ -6,4 +6,5 @@ data class ResultUIState(
     val score: Int = 0,
     val points: Int = 0,
     val word: String = "",
+    val category: String = ""
 )

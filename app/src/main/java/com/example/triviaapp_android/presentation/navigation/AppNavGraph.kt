@@ -1,12 +1,10 @@
 package com.example.triviaapp_android.presentation.navigation
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -47,7 +45,7 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             composable("login")    { LoginScreen(navController) }
             composable("register") { RegisterScreen(navController) }
             composable("home")     { HomeScreen(navController, triviaViewModel) }
-            composable("progress") { ProgressScreen(navController) }
+            composable("progress") { ProgressScreen(triviaViewModel) }
             composable("difficulty"){ DifficultySelectionScreen(navController, triviaViewModel) }
             composable("question") { QuestionScreen(navController, triviaViewModel) }
             composable("result")   { ResultScreen(navController, triviaViewModel) }

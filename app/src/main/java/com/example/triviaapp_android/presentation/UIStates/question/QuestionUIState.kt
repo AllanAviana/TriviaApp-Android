@@ -1,4 +1,4 @@
-package com.example.triviaapp_android.presentation.UIStates
+package com.example.triviaapp_android.presentation.UIStates.question
 
 data class QuestionUIState(
     val question: String = "",
@@ -6,5 +6,5 @@ data class QuestionUIState(
     val correctAnswer: String = "",
     val selectedAnswer: String = "",
     val isCorrect: Boolean = false,
-    val finished: Boolean = false
+    val finished: Boolean = false,
 )

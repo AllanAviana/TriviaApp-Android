@@ -6,10 +6,11 @@ import androidx.lifecycle.viewModelScope
 import com.example.triviaapp_android.R
 import com.example.triviaapp_android.data.remote.Question
 import com.example.triviaapp_android.data.repository.TriviaRepository
-import com.example.triviaapp_android.presentation.UIStates.QuestionUIState
+import com.example.triviaapp_android.presentation.UIStates.question.QuestionUIState
 import com.example.triviaapp_android.presentation.UIStates.api.ApiState
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 import com.example.triviaapp_android.presentation.UIStates.home.LastPlayedState
+import com.example.triviaapp_android.presentation.UIStates.progress.ProgressUIState
 import com.example.triviaapp_android.presentation.UIStates.result.ResultUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,6 +45,11 @@ class TriviaViewModel @Inject constructor(
     )
     val resultUIState = _resultUIState.asStateFlow()
 
+    private val _progressUIState = MutableStateFlow(
+        ProgressUIState()
+    )
+    val progressUIState = _progressUIState.asStateFlow()
+
     fun getQuestions() {
         viewModelScope.launch {
             val questions = triviaRepository.getQuestions(
@@ -61,12 +67,10 @@ class TriviaViewModel @Inject constructor(
 
     fun updateCategory(category: Int) {
         _apiState.value = _apiState.value.copy(category = category)
-        Log.d("viewModel", _apiState.value.toString())
     }
 
     fun updateDifficulty(difficulty: String) {
         _apiState.value = _apiState.value.copy(difficulty = difficulty)
-        Log.d("viewModel", _apiState.value.toString())
 
     }
 
@@ -78,7 +82,6 @@ class TriviaViewModel @Inject constructor(
                     .shuffled(),
                 correctAnswer = _questions.value[0].correct_answer
             )
-            Log.d("viewModel", _questionUiState.value.toString())
             _questions.value = _questions.value.drop(1)
         } else {
             _questionUiState.value = _questionUiState.value.copy(
@@ -151,6 +154,11 @@ class TriviaViewModel @Inject constructor(
     }
 
     fun updateLastPlayed(category: String) {
+        _resultUIState.update {
+            it.copy(
+                category = category
+            )
+        }
         when (category) {
             "Sports" -> {
                 _HomeUIState.update {
@@ -208,6 +216,35 @@ class TriviaViewModel @Inject constructor(
                 }
             }
         }
-        Log.d("viewModel2", _HomeUIState.value.toString())
+    }
+
+    fun updateStatistics(points: Int, category: String) {
+        _progressUIState.update { state ->
+            val updatedCardList = state.cardList.map { card ->
+                if (card.category == category) {
+                    card.copy(
+                        gamePlayed = card.gamePlayed + 1,
+                        score = card.score + points
+                    )
+                } else {
+                    card
+                }
+            }
+            val newPoints = state.points + points
+            var medal = state.medal
+            if (newPoints in 200..499) {
+                medal = R.drawable.medal2
+            } else {
+                if (newPoints >= 500) {
+                    medal = R.drawable.medal3
+                }
+            }
+            state.copy(
+                points = newPoints,
+                progress = newPoints / state.total,
+                cardList = updatedCardList,
+                medal = medal
+            )
+        }
     }
 }

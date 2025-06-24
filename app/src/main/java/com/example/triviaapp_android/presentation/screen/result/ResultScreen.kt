@@ -27,6 +27,10 @@ fun ResultScreen(navController: NavHostController, triviaViewModel: TriviaViewMo
 
         ScoreSection(resultUIState.value.score)
 
-        PointsSection(resultUIState.value.points) { navController.navigate("home") }
+        PointsSection(
+            resultUIState.value.points,
+            resultUIState.value.category,
+            triviaViewModel
+        ) { navController.navigate("home") }
     }
 }
