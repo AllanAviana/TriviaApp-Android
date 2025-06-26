@@ -19,7 +19,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.triviaapp_android.R
 import com.example.triviaapp_android.presentation.UIStates.progress.ProgressCard
 
 @Composable
@@ -74,7 +73,7 @@ fun StatsCard(card: ProgressCard) {
                         horizontalArrangement = Arrangement.Start
                     ) {
                         Text(
-                            "${card.gamePlayed}",
+                            "${card.gameCount}",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.Bold,
                             color = Color.White

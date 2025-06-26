@@ -223,7 +223,7 @@ class TriviaViewModel @Inject constructor(
             val updatedCardList = state.cardList.map { card ->
                 if (card.category == category) {
                     card.copy(
-                        gamePlayed = card.gamePlayed + 1,
+                        gameCount = card.gameCount + 1,
                         score = card.score + points
                     )
                 } else {
@@ -247,4 +247,5 @@ class TriviaViewModel @Inject constructor(
             )
         }
     }
+
 }

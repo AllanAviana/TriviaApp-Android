@@ -11,25 +11,25 @@ data class ProgressUIState(
         ProgressCard(
             category = "Sports",
             image = R.drawable.sportsicon,
-            gamePlayed = 0,
+            gameCount = 0,
             score = 0
         ),
         ProgressCard(
             category = "Geography",
             image = R.drawable.gegographyicon,
-            gamePlayed = 0,
+            gameCount = 0,
             score = 0
         ),
         ProgressCard(
             category = "History",
             image = R.drawable.historyicon2,
-            gamePlayed = 0,
+            gameCount = 0,
             score = 0
         ),
         ProgressCard(
             category = "Anime",
             image = R.drawable.animeicon,
-            gamePlayed = 0,
+            gameCount = 0,
             score = 0
         )
     )

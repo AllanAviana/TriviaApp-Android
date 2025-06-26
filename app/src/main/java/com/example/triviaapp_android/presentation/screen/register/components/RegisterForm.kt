@@ -8,40 +8,41 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.graphics.Color
 import com.example.triviaapp_android.R
+import com.example.triviaapp_android.presentation.UIStates.registerUIState.RegisterUIState
 import com.example.triviaapp_android.presentation.screen.welcome.components.LoginButton
+import com.example.triviaapp_android.presentation.viewmodel.AuthViewModel
 import components.LoginTextField
 
 @Composable
-fun RegisterForm() {
+fun RegisterForm(authViewModel: AuthViewModel, state: RegisterUIState) {
+
     LoginTextField(
-        label = "Create an user name",
-        placeholder = "User name",
-        value = "",
-        onValueChange = {},
+        label = "E-mail",
+        placeholder = "you@example.com",
+        value = state.email,
+        onValueChange = { authViewModel.onEmailChange(it) },   // ← lambda
         modifier = Modifier.padding(top = 40.dp)
     )
-
     LoginTextField(
-        label = "Create a password",
-        placeholder = "Password",
-        value = "",
-        onValueChange = {},
-        modifier = Modifier.padding(top = 24.dp)
+        label = "Password",
+        placeholder = "••••••••",
+        value = state.password,
+        onValueChange = authViewModel::onPassChange,
+        modifier = Modifier.padding(top = 24.dp),
     )
-
     LoginTextField(
-        label = "Confirm your password",
-        placeholder = "Password",
-        value = "",
-        onValueChange = {},
-        modifier = Modifier.padding(top = 24.dp)
+        label = "Confirm password",
+        placeholder = "••••••••",
+        value = state.confirm,
+        onValueChange = authViewModel::onConfirmChange,
+        modifier = Modifier.padding(top = 24.dp),
     )
 
     LoginButton(
-        onClick = {},
+        onClick = authViewModel::register,
         color = Color(0xFF2CA7CE),
         colorText = Color.White,
-        text = "Sign up",
+        text = if (state.loading) "Signing up…" else "Sign up",
         padding = 48.dp
     )
 

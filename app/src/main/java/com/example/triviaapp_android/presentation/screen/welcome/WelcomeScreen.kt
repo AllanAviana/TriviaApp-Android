@@ -22,8 +22,8 @@ fun WelcomeScreen(navController: NavHostController) {
     ) {
         WelcomeHeaderImage()
         WelcomeTitle()
-        LoginButton(modifier = Modifier.align(Alignment.CenterHorizontally))
-        SignUpButton(modifier = Modifier.align(Alignment.CenterHorizontally))
+        LoginButton(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = { navController.navigate("login") })
+        SignUpButton(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = { navController.navigate("register") })
     }
 }
 

@@ -5,7 +5,7 @@ plugins {
     id("com.google.devtools.ksp") version "2.0.0-1.0.21"
     id("kotlin-kapt")
     id ("com.google.dagger.hilt.android")
-
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -44,10 +44,12 @@ android {
 }
 
 dependencies {
+    implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
+
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
 
-
     implementation ("com.google.dagger:hilt-android:2.51.1")
+    implementation(libs.firebase.auth.ktx)
     ksp("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 
