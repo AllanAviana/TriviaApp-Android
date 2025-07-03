@@ -10,10 +10,15 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
+import com.example.triviaapp_android.presentation.viewmodel.AuthViewModel
 import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun HomeScreen(navController: NavHostController, triviaViewModel: TriviaViewModel) {
+fun HomeScreen(
+    navController: NavHostController,
+    triviaViewModel: TriviaViewModel,
+    authViewModel: AuthViewModel
+) {
     val homeUIState = triviaViewModel.homeUIState.collectAsState()
     LazyColumn(
         modifier = Modifier
@@ -22,7 +27,7 @@ fun HomeScreen(navController: NavHostController, triviaViewModel: TriviaViewMode
     ) {
 
         item {
-            HomeHeader(homeUIState.value, navController)
+            HomeHeader(homeUIState.value, navController) { authViewModel.logout() }
         }
 
         item {

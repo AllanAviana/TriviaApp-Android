@@ -14,9 +14,14 @@ import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.screen.register.components.RegisterForm
 import com.example.triviaapp_android.presentation.screen.register.components.RegisterHeader
 import com.example.triviaapp_android.presentation.viewmodel.AuthViewModel
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun RegisterScreen(navController: NavHostController, authViewModel: AuthViewModel) {
+fun RegisterScreen(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    triviaViewModel: TriviaViewModel
+) {
     val state by authViewModel.ui.collectAsState()
 
 
@@ -26,6 +31,8 @@ fun RegisterScreen(navController: NavHostController, authViewModel: AuthViewMode
                 popUpTo("register") { inclusive = true }
             }
             authViewModel.clearSuccess()
+            triviaViewModel.loadStats()
+            triviaViewModel.loadLastPlayed()
         }
     }
     Column(

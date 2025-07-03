@@ -50,6 +50,7 @@ dependencies {
 
     implementation ("com.google.dagger:hilt-android:2.51.1")
     implementation(libs.firebase.auth.ktx)
+    implementation(libs.firebase.firestore.ktx)
     ksp("com.google.dagger:hilt-compiler:2.51.1")
     implementation ("androidx.hilt:hilt-navigation-compose:1.2.0")
 

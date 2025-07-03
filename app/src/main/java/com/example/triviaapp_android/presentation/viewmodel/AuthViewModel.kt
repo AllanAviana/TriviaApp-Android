@@ -1,6 +1,5 @@
 package com.example.triviaapp_android.presentation.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.triviaapp_android.firebase.AuthRepository

@@ -15,9 +15,10 @@ import com.example.triviaapp_android.R
 import com.example.triviaapp_android.presentation.UIStates.login.LoginUIState
 import com.example.triviaapp_android.presentation.screen.welcome.components.LoginButton
 import com.example.triviaapp_android.presentation.viewmodel.AuthViewModel
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun LoginForm(state: LoginUIState, authViewModel: AuthViewModel) {
+fun LoginForm(state: LoginUIState, authViewModel: AuthViewModel, triviaViewModel: TriviaViewModel) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -52,10 +53,9 @@ fun LoginForm(state: LoginUIState, authViewModel: AuthViewModel) {
             onClick    = authViewModel::login,
             color      = Color(0xFF2CA7CE),
             colorText  = Color.White,
-            text       = if (state.loading) "Signing in…" else "Sign in"
+            text       = if (state.loading) "Signing in…" else "Sign in",
         )
 
-        /* feedback de erro */
         state.error?.let {
             Text(it, color = Color.Red, modifier = Modifier.padding(top = 8.dp))
         }

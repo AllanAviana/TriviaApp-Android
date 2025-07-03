@@ -11,16 +11,20 @@ import com.example.triviaapp_android.R
 import com.example.triviaapp_android.presentation.UIStates.registerUIState.RegisterUIState
 import com.example.triviaapp_android.presentation.screen.welcome.components.LoginButton
 import com.example.triviaapp_android.presentation.viewmodel.AuthViewModel
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 import components.LoginTextField
 
 @Composable
-fun RegisterForm(authViewModel: AuthViewModel, state: RegisterUIState) {
+fun RegisterForm(
+    authViewModel: AuthViewModel,
+    state: RegisterUIState,
+) {
 
     LoginTextField(
         label = "E-mail",
         placeholder = "you@example.com",
         value = state.email,
-        onValueChange = { authViewModel.onEmailChange(it) },   // ← lambda
+        onValueChange = { authViewModel.onEmailChange(it) },
         modifier = Modifier.padding(top = 40.dp)
     )
     LoginTextField(
@@ -43,8 +47,8 @@ fun RegisterForm(authViewModel: AuthViewModel, state: RegisterUIState) {
         color = Color(0xFF2CA7CE),
         colorText = Color.White,
         text = if (state.loading) "Signing up…" else "Sign up",
-        padding = 48.dp
-    )
+        padding = 48.dp,
+        )
 
     Image(
         painter = painterResource(id = R.drawable.registerimagefooter),

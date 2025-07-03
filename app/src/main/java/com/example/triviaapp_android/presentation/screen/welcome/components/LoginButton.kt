@@ -10,12 +10,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.unit.Dp
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-fun LoginButton(onClick: () -> Unit = {}, modifier: Modifier = Modifier, color: Color = Color.White, colorText: Color = Color(0xFF2CA7CE), text: String = "Login", padding: Dp = 72.dp) {
+fun LoginButton(
+    onClick: () -> Unit = {},
+    modifier: Modifier = Modifier,
+    color: Color = Color.White,
+    colorText: Color = Color(0xFF2CA7CE),
+    text: String = "Login",
+    padding: Dp = 72.dp,
+) {
     Button(
         onClick = onClick,
         modifier = modifier

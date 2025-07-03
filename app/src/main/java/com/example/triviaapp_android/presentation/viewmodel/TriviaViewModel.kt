@@ -6,11 +6,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.triviaapp_android.R
 import com.example.triviaapp_android.data.remote.Question
 import com.example.triviaapp_android.data.repository.TriviaRepository
-import com.example.triviaapp_android.presentation.UIStates.question.QuestionUIState
+import com.example.triviaapp_android.firebase.StatsRepository
 import com.example.triviaapp_android.presentation.UIStates.api.ApiState
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 import com.example.triviaapp_android.presentation.UIStates.home.LastPlayedState
 import com.example.triviaapp_android.presentation.UIStates.progress.ProgressUIState
+import com.example.triviaapp_android.presentation.UIStates.question.QuestionUIState
 import com.example.triviaapp_android.presentation.UIStates.result.ResultUIState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,231 +22,159 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TriviaViewModel @Inject constructor(
-    private val triviaRepository: TriviaRepository
+    //region DEPENDENCIES
+    private val triviaRepository: TriviaRepository,
+    private val statsRepository: StatsRepository
+    //endregion
 ) : ViewModel() {
-    private val _questions = MutableStateFlow<List<Question>>(emptyList())
 
-    private val _HomeUIState = MutableStateFlow(
-        HomeUIState()
-    )
-    val homeUIState = _HomeUIState.asStateFlow()
+    //region STATE FLOWS
+    private val _questions        = MutableStateFlow<List<Question>>(emptyList())
 
-    private val _apiState = MutableStateFlow(
-        ApiState()
-    )
+    private val _homeUIState      = MutableStateFlow(HomeUIState())
+    val   homeUIState             = _homeUIState.asStateFlow()
 
-    private val _questionUiState = MutableStateFlow(
-        QuestionUIState()
-    )
+    private val _apiState         = MutableStateFlow(ApiState())
 
-    val questionUiState = _questionUiState.asStateFlow()
+    private val _questionUiState  = MutableStateFlow(QuestionUIState())
+    val   questionUiState         = _questionUiState.asStateFlow()
 
-    private val _resultUIState = MutableStateFlow(
-        ResultUIState()
-    )
-    val resultUIState = _resultUIState.asStateFlow()
+    private val _resultUIState    = MutableStateFlow(ResultUIState())
+    val   resultUIState           = _resultUIState.asStateFlow()
 
-    private val _progressUIState = MutableStateFlow(
-        ProgressUIState()
-    )
-    val progressUIState = _progressUIState.asStateFlow()
+    private val _progressUIState  = MutableStateFlow(ProgressUIState())
+    val   progressUIState         = _progressUIState.asStateFlow()
+    //endregion
 
-    fun getQuestions() {
+    //region INITIALIZATION
+    init {
         viewModelScope.launch {
-            val questions = triviaRepository.getQuestions(
-                amount = _apiState.value.amount,
-                category = _apiState.value.category,
-                difficulty = _apiState.value.difficulty
-            )
-            _questions.value = questions.results
-
-            Log.d("viewModel", questions.toString())
-
-            updateQuestionUIState()
+            statsRepository.loadStats()?.let { _progressUIState.value = it }
+            statsRepository.loadLastPlayed()?.let { _homeUIState.value = it }
         }
     }
+    //endregion
 
-    fun updateCategory(category: Int) {
-        _apiState.value = _apiState.value.copy(category = category)
+    //region TRIVIA API
+    fun getQuestions() = viewModelScope.launch {
+        val questions = triviaRepository.getQuestions(
+            amount     = _apiState.value.amount,
+            category   = _apiState.value.category,
+            difficulty = _apiState.value.difficulty
+        )
+        _questions.value = questions.results
+        updateQuestionUIState()
     }
 
-    fun updateDifficulty(difficulty: String) {
-        _apiState.value = _apiState.value.copy(difficulty = difficulty)
-
-    }
+    fun updateCategory(category: Int)   { _apiState.value = _apiState.value.copy(category   = category) }
+    fun updateDifficulty(difficulty: String) { _apiState.value = _apiState.value.copy(difficulty = difficulty) }
 
     fun updateQuestionUIState() {
         if (_questions.value.isNotEmpty()) {
             _questionUiState.value = _questionUiState.value.copy(
-                question = _questions.value[0].question,
-                options = _questions.value[0].incorrect_answers.plus(_questions.value[0].correct_answer)
+                question      = _questions.value[0].question,
+                options       = _questions.value[0].incorrect_answers
+                    .plus(_questions.value[0].correct_answer)
                     .shuffled(),
                 correctAnswer = _questions.value[0].correct_answer
             )
             _questions.value = _questions.value.drop(1)
         } else {
-            _questionUiState.value = _questionUiState.value.copy(
-                finished = true
-            )
+            _questionUiState.value = _questionUiState.value.copy(finished = true)
         }
     }
+    //endregion
 
+    //region GAME HELPERS
     fun resetUIStates() {
-        _questionUiState.value = _questionUiState.value.copy(
-            question = "",
-            options = emptyList(),
-            correctAnswer = "",
-            selectedAnswer = "",
-            isCorrect = false,
-            finished = false
-        )
-        _resultUIState.value = _resultUIState.value.copy(
-            score = 0,
-            points = 0,
-            text = "",
-            image = 0,
-            word = ""
-        )
+        _questionUiState.value = QuestionUIState()
+        _resultUIState.value   = ResultUIState()
     }
 
     fun checkAnswer(answer: String) {
         val isCorrect = _questionUiState.value.correctAnswer == answer
-
         if (isCorrect) {
-            _resultUIState.update {
-                it.copy(
-                    score = it.score + 1,
-                    points = it.points + 100
-                )
-            }
+            _resultUIState.update { it.copy(score = it.score + 1, points = it.points + 100) }
         }
-
-        when (_resultUIState.value.score) {
-            in 0..2 -> {
-                _resultUIState.update {
-                    it.copy(
-                        text = "The outcome was disastrous. Better luck next time!",
-                        image = R.drawable.trophy3,
-                        word = "Disastrous"
-                    )
-                }
-            }
-
-            in 3..4 -> {
-                _resultUIState.update {
-                    it.copy(
-                        text = "You're getting there! Not perfect, but a solid effort!",
-                        image = R.drawable.trophy2,
-                        word = "Getting there"
-                    )
-                }
-            }
-
-            else -> {
-                _resultUIState.update {
-                    it.copy(
-                        text = "Perfect score! You’re a trivia master!",
-                        image = R.drawable.trophy,
-                        word = "Perfect"
-                    )
-                }
-            }
-        }
+        _resultUIState.update { it.withTrophyInfo() }
     }
 
+    private fun ResultUIState.withTrophyInfo(): ResultUIState = when (score) {
+        in 0..2 -> copy(
+            text  = "The outcome was disastrous. Better luck next time!",
+            image = R.drawable.trophy3,
+            word  = "Disastrous"
+        )
+        in 3..4 -> copy(
+            text  = "You're getting there! Not perfect, but a solid effort!",
+            image = R.drawable.trophy2,
+            word  = "Getting there"
+        )
+        else    -> copy(
+            text  = "Perfect score! You’re a trivia master!",
+            image = R.drawable.trophy,
+            word  = "Perfect"
+        )
+    }
+    //endregion
+
+    //region LAST PLAYED
     fun updateLastPlayed(category: String) {
-        _resultUIState.update {
-            it.copy(
-                category = category
-            )
-        }
-        when (category) {
-            "Sports" -> {
-                _HomeUIState.update {
-                    it.copy(
-                        lastPlayed = LastPlayedState(
-                            category = "Sports",
-                            categoryId = 21,
-                            image = R.drawable.field,
-                            mainImage = R.drawable.ball
-                        ),
-                        isPlayed = true
-                    )
-                }
-            }
+        _resultUIState.update { it.copy(category = category) }
+        _homeUIState.update { it.withCategory(category) }
 
-            "Geography" -> {
-                _HomeUIState.update {
-                    it.copy(
-                        lastPlayed = LastPlayedState(
-                            category = "Geography",
-                            categoryId = 22,
-                            image = R.drawable.earth,
-                            mainImage = R.drawable.globe
-                        ),
-                        isPlayed = true
-                    )
-                }
-            }
-
-            "History" -> {
-                _HomeUIState.update {
-                    it.copy(
-                        lastPlayed = LastPlayedState(
-                            category = "History",
-                            categoryId = 23,
-                            image = R.drawable.history,
-                            mainImage = R.drawable.historyicon
-                        ),
-                        isPlayed = true
-                    )
-                }
-            }
-
-            "Anime" -> {
-                _HomeUIState.update {
-                    it.copy(
-                        lastPlayed = LastPlayedState(
-                            category = "Anime",
-                            categoryId = 31,
-                            image = R.drawable.dragon,
-                            mainImage = R.drawable.animeicon
-                        ),
-                        isPlayed = true
-                    )
-                }
-            }
+        viewModelScope.launch {
+            runCatching { statsRepository.saveLastPlayed(_homeUIState.value) }
+                .onFailure { Log.e("TriviaVM", "Failed to save lastPlayed", it) }
         }
     }
 
+    private fun HomeUIState.withCategory(cat: String): HomeUIState = when (cat) {
+        "Sports"    -> copy(lastPlayed = LastPlayedState("Sports",    21, R.drawable.field,     R.drawable.ball),       isPlayed = true)
+        "Geography" -> copy(lastPlayed = LastPlayedState("Geography", 22, R.drawable.earth,     R.drawable.globe),      isPlayed = true)
+        "History"   -> copy(lastPlayed = LastPlayedState("History",   23, R.drawable.history,   R.drawable.historyicon),isPlayed = true)
+        "Anime"     -> copy(lastPlayed = LastPlayedState("Anime",     31, R.drawable.dragon,    R.drawable.animeicon),  isPlayed = true)
+        else        -> this
+    }
+    //endregion
+
+    //region STATISTICS
     fun updateStatistics(points: Int, category: String) {
         _progressUIState.update { state ->
-            val updatedCardList = state.cardList.map { card ->
-                if (card.category == category) {
-                    card.copy(
-                        gameCount = card.gameCount + 1,
-                        score = card.score + points
-                    )
-                } else {
-                    card
-                }
+            val updatedCards = state.cardList.map { card ->
+                if (card.category == category)
+                    card.copy(gameCount = card.gameCount + 1, score = card.score + points)
+                else card
             }
             val newPoints = state.points + points
-            var medal = state.medal
-            if (newPoints in 200..499) {
-                medal = R.drawable.medal2
-            } else {
-                if (newPoints >= 500) {
-                    medal = R.drawable.medal3
-                }
-            }
             state.copy(
-                points = newPoints,
+                points   = newPoints,
                 progress = newPoints / state.total,
-                cardList = updatedCardList,
-                medal = medal
+                cardList = updatedCards,
+                medal    = when (newPoints) {
+                    in   0 ..199 -> R.drawable.medal
+                    in 200 ..499 -> R.drawable.medal2
+                    else         -> R.drawable.medal3
+                }
             )
+        }
+
+        viewModelScope.launch {
+            runCatching { statsRepository.saveStats(_progressUIState.value) }
+                .onFailure { Log.e("TriviaVM", "Failed to save stats", it) }
         }
     }
 
+    fun loadStats() = viewModelScope.launch {
+        runCatching { statsRepository.loadStats() }
+            .onSuccess { it?.let { _progressUIState.value = it } }
+            .onFailure { Log.e("TriviaVM", "Failed to load stats", it) }
+    }
+
+    fun loadLastPlayed() = viewModelScope.launch {
+        runCatching { statsRepository.loadLastPlayed() }
+            .onSuccess { it?.let { _homeUIState.value = it } }
+            .onFailure { Log.e("TriviaVM", "Failed to load lastPlayed", it) }
+    }
+    //endregion
 }

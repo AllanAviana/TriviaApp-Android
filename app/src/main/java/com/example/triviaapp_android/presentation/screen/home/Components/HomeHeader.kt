@@ -1,6 +1,7 @@
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
@@ -25,7 +26,11 @@ import com.example.triviaapp_android.R
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 
 @Composable
-        fun HomeHeader(homeUIState: HomeUIState, navController: NavHostController) {
+        fun HomeHeader(
+    homeUIState: HomeUIState,
+    navController: NavHostController,
+    function: () -> Unit
+) {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -49,7 +54,10 @@ import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
                     Image(
                         painter = painterResource(id = R.drawable.homeappicon),
                         contentDescription = null,
-                        modifier = Modifier.size(80.dp)
+                        modifier = Modifier.size(80.dp).clickable {
+                            navController.navigate("welcome")
+                            function()
+                        }
                     )
                 }
 

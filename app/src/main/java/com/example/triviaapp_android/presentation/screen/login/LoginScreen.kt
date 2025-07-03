@@ -10,12 +10,17 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.viewmodel.AuthViewModel
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 import components.LoginForm
 import components.LoginHeader
 import components.loginGradient
 
 @Composable
-fun LoginScreen(navController: NavHostController, authViewModel: AuthViewModel) {
+fun LoginScreen(
+    navController: NavHostController,
+    authViewModel: AuthViewModel,
+    triviaViewModel: TriviaViewModel
+) {
 
     val state by authViewModel.loginUI.collectAsState()
     LaunchedEffect(state.success) {
@@ -24,6 +29,8 @@ fun LoginScreen(navController: NavHostController, authViewModel: AuthViewModel) 
                 popUpTo("login") { inclusive = true }
             }
             authViewModel.clearLoginSuccess()
+            triviaViewModel.loadStats()
+            triviaViewModel.loadLastPlayed()
         }
     }
     Column(
@@ -34,6 +41,6 @@ fun LoginScreen(navController: NavHostController, authViewModel: AuthViewModel) 
     ) {
         LoginHeader()
 
-        LoginForm(state, authViewModel)
+        LoginForm(state, authViewModel, triviaViewModel)
     }
 }

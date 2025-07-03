@@ -46,9 +46,9 @@ fun AppNavGraph(navController: NavHostController = rememberNavController()) {
             modifier = Modifier
         ) {
             composable("welcome") { WelcomeScreen(navController) }
-            composable("login") { LoginScreen(navController, authViewModel) }
-            composable("register") { RegisterScreen(navController, authViewModel) }
-            composable("home") { HomeScreen(navController, triviaViewModel) }
+            composable("login") { LoginScreen(navController, authViewModel, triviaViewModel) }
+            composable("register") { RegisterScreen(navController, authViewModel, triviaViewModel) }
+            composable("home") { HomeScreen(navController, triviaViewModel, authViewModel) }
             composable("progress") { ProgressScreen(triviaViewModel) }
             composable("difficulty") { DifficultySelectionScreen(navController, triviaViewModel) }
             composable("question") { QuestionScreen(navController, triviaViewModel) }

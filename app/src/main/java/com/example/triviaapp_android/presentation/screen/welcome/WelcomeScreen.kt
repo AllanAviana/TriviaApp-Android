@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import com.example.triviaapp_android.presentation.screen.welcome.components.LoginButton
 import com.example.triviaapp_android.presentation.screen.welcome.components.SignUpButton
@@ -22,7 +21,10 @@ fun WelcomeScreen(navController: NavHostController) {
     ) {
         WelcomeHeaderImage()
         WelcomeTitle()
-        LoginButton(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = { navController.navigate("login") })
+        LoginButton(
+            onClick = { navController.navigate("login") },
+            modifier = Modifier.align(Alignment.CenterHorizontally),
+        )
         SignUpButton(modifier = Modifier.align(Alignment.CenterHorizontally), onClick = { navController.navigate("register") })
     }
 }

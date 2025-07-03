@@ -1,6 +1,7 @@
 package com.example.triviaapp_android.presentation.screen.Question.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -31,6 +32,7 @@ fun QuestionHeader(question: String) {
         fontSize = 24.sp,
         modifier = Modifier
             .fillMaxWidth(0.9f)
+            .fillMaxHeight(0.3f)
             .padding(top = 64.dp),
         textAlign = TextAlign.Center,
         fontWeight = FontWeight.Medium
