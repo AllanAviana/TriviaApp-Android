@@ -1,4 +1,4 @@
-package com.example.triviaapp_android.data.api
+package com.example.triviaapp_android.data.contracts
 
 import com.example.triviaapp_android.data.remote.TriviaResponse
 import retrofit2.http.GET

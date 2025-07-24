@@ -1,6 +1,6 @@
 package com.example.triviaapp_android.di
 
-import com.example.triviaapp_android.data.api.TriviaApi
+import com.example.triviaapp_android.data.contracts.TriviaApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

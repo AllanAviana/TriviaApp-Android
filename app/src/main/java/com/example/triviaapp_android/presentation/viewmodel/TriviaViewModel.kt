@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.triviaapp_android.R
+import com.example.triviaapp_android.data.contracts.StatsRepository
+import com.example.triviaapp_android.data.contracts.TriviaRepository
 import com.example.triviaapp_android.data.remote.Question
-import com.example.triviaapp_android.data.repository.TriviaRepository
-import com.example.triviaapp_android.firebase.StatsRepository
 import com.example.triviaapp_android.presentation.UIStates.api.ApiState
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 import com.example.triviaapp_android.presentation.UIStates.home.LastPlayedState
@@ -89,6 +89,13 @@ class TriviaViewModel @Inject constructor(
     fun resetUIStates() {
         _questionUiState.value = QuestionUIState()
         _resultUIState.value   = ResultUIState()
+    }
+
+    fun reset(){
+        _questionUiState.value = QuestionUIState()
+        _resultUIState.value   = ResultUIState()
+        _homeUIState.value     = HomeUIState()
+        _progressUIState.value = ProgressUIState()
     }
 
     fun checkAnswer(answer: String) {

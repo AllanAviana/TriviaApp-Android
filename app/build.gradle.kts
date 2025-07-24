@@ -44,6 +44,13 @@ android {
 }
 
 dependencies {
+    implementation ("androidx.navigation:navigation-compose:2.7.0+")
+    implementation ("androidx.compose.animation:animation:<versão-compose>")
+
+
+    testImplementation ("junit:junit:4.13.2")
+    testImplementation ("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.8.1")
+
     implementation(platform("com.google.firebase:firebase-bom:33.15.0"))
 
     implementation ("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")

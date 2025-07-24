@@ -1,4 +1,3 @@
-
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -24,78 +23,83 @@ import androidx.compose.ui.zIndex
 import androidx.navigation.NavHostController
 import com.example.triviaapp_android.R
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
+import com.example.triviaapp_android.presentation.viewmodel.TriviaViewModel
 
 @Composable
-        fun HomeHeader(
+fun HomeHeader(
     homeUIState: HomeUIState,
     navController: NavHostController,
+    triviaViewModel: TriviaViewModel,
     function: () -> Unit
 ) {
-            Box(
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(216.dp)
+            .background(Color(0xFF078AD2))
+            .padding(horizontal = 16.dp)
+            .padding(top = 32.dp)
+            .zIndex(1f)
+    ) {
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                "TriviaApp",
+                color = Color(0xFF005C8E),
+                fontSize = 40.sp,
+                fontWeight = FontWeight.Bold,
+            )
+            Image(
+                painter = painterResource(id = R.drawable.homeappicon),
+                contentDescription = null,
                 modifier = Modifier
-                    .fillMaxWidth()
-                    .height(216.dp)
-                    .background(Color(0xFF078AD2))
-                    .padding(horizontal = 16.dp)
-                    .padding(top = 32.dp)
-                    .zIndex(1f)
-            ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        "TriviaApp",
-                        color = Color(0xFF005C8E),
-                        fontSize = 40.sp,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Image(
-                        painter = painterResource(id = R.drawable.homeappicon),
-                        contentDescription = null,
-                        modifier = Modifier.size(80.dp).clickable {
-                            navController.navigate("welcome")
-                            function()
-                        }
-                    )
-                }
-
-                Text(
-                    text = "Last played",
-                    color = Color.White,
-                    fontSize = 24.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .align(Alignment.BottomStart)
-                        .padding(bottom = 16.dp)
-                )
-            }
-
-            Box() {
-                Image(
-                    painter = painterResource(id = R.drawable.homewavetop),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .offset(y = (-1).dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                LastPlayedCard(
-                    modifier = Modifier.align(Alignment.Center),
-                    homeUIState.lastPlayed,
-                    homeUIState.isPlayed
-                )
-
-                if(homeUIState.isPlayed){
-                    Image(
-                        painter = painterResource(id = homeUIState.lastPlayed.mainImage),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .size(100.dp)
-                            .offset(x = 16.dp)
-                    )
-                }
-            }
+                    .size(80.dp)
+                    .clickable {
+                        navController.navigate("welcome")
+                        function()
+                        triviaViewModel.reset()
+                    }
+            )
         }
+
+        Text(
+            text = "Last played",
+            color = Color.White,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.SemiBold,
+            modifier = Modifier
+                .align(Alignment.BottomStart)
+                .padding(bottom = 16.dp)
+        )
+    }
+
+    Box() {
+        Image(
+            painter = painterResource(id = R.drawable.homewavetop),
+            contentDescription = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(y = (-1).dp),
+            contentScale = ContentScale.Crop
+        )
+
+        LastPlayedCard(
+            modifier = Modifier.align(Alignment.Center),
+            homeUIState.lastPlayed,
+            homeUIState.isPlayed
+        )
+
+        if (homeUIState.isPlayed) {
+            Image(
+                painter = painterResource(id = homeUIState.lastPlayed.mainImage),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(100.dp)
+                    .offset(x = 16.dp)
+            )
+        }
+    }
+}

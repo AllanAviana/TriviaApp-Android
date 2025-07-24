@@ -1,7 +1,8 @@
-package com.example.triviaapp_android.firebase
+package com.example.triviaapp_android.data.repository
 
 import android.util.Log
 import com.example.triviaapp_android.R
+import com.example.triviaapp_android.data.contracts.StatsRepository
 import com.example.triviaapp_android.presentation.UIStates.home.HomeUIState
 import com.example.triviaapp_android.presentation.UIStates.home.LastPlayedState
 import com.example.triviaapp_android.presentation.UIStates.progress.ProgressCard
@@ -14,10 +15,10 @@ import kotlinx.coroutines.tasks.await
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class StatsRepository @Inject constructor(
+class StatsRepositoryImpl @Inject constructor(
     private val db: FirebaseFirestore,
     private val auth: FirebaseAuth
-) {
+): StatsRepository {
     /* ------------------------------------------------------------------ */
     /*  Helpers de referências                                            */
     /* ------------------------------------------------------------------ */
@@ -34,7 +35,7 @@ class StatsRepository @Inject constructor(
     /* ------------------------------------------------------------------ */
     /*  Progress / Estatísticas                                           */
     /* ------------------------------------------------------------------ */
-    suspend fun saveStats(state: ProgressUIState) {
+    override suspend fun saveStats(state: ProgressUIState) {
         val doc = statsDoc() ?: run {
             Log.w("StatsRepo", "saveStats cancelado – user==null")
             return
@@ -56,7 +57,7 @@ class StatsRepository @Inject constructor(
         withContext(Dispatchers.IO) { doc.set(data, SetOptions.merge()).await() }
     }
 
-    suspend fun loadStats(): ProgressUIState? {
+    override suspend fun loadStats(): ProgressUIState? {
         Log.d("StatsRepo", uid.toString())
         val doc = statsDoc() ?: return null
         return try {
@@ -87,7 +88,7 @@ class StatsRepository @Inject constructor(
     /* ------------------------------------------------------------------ */
     /*  Last-Played                                                       */
     /* ------------------------------------------------------------------ */
-    suspend fun saveLastPlayed(homeState: HomeUIState) {
+   override suspend fun saveLastPlayed(homeState: HomeUIState) {
         Log.d("StatsRepo", uid.toString())
 
         val doc = lastPlayedDoc() ?: run {
@@ -106,7 +107,7 @@ class StatsRepository @Inject constructor(
         withContext(Dispatchers.IO) { doc.set(data, SetOptions.merge()).await() }
     }
 
-    suspend fun loadLastPlayed(): HomeUIState? {
+    override suspend fun loadLastPlayed(): HomeUIState? {
         val doc = lastPlayedDoc() ?: return null
         return try {
             val snap = doc.get().await()

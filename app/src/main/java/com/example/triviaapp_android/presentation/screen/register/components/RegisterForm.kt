@@ -47,7 +47,7 @@ fun RegisterForm(
         color = Color(0xFF2CA7CE),
         colorText = Color.White,
         text = if (state.loading) "Signing up…" else "Sign up",
-        padding = 48.dp,
+        padding = 48.dp
         )
 
     Image(

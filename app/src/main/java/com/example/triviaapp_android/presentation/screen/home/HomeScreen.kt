@@ -27,7 +27,7 @@ fun HomeScreen(
     ) {
 
         item {
-            HomeHeader(homeUIState.value, navController) { authViewModel.logout() }
+            HomeHeader(homeUIState.value, navController, triviaViewModel) { authViewModel.logout() }
         }
 
         item {
